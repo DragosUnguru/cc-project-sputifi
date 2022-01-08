@@ -1,0 +1,86 @@
+/* Global variables */
+:root {
+    --color-bg-primary: #202020;
+    --color-bg-secondary: #191919;
+    --color-primary: #2BDE6A;
+    --color-secondary: #B91D82;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: var(--color-bg-primary);
+}
+
+/* Anchors (mainly hyperlinks) */
+a {
+    font-family: sans-serif;
+    text-decoration: none;
+}
+
+/* Boxed elements */
+.box {
+    width: 400px;
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--color-bg-secondary);
+    text-align: center;
+    border-radius: 24px;
+}
+
+/* Boxed headings */
+.box h1 {
+    color: white;
+    font-weight: 500;
+    margin-bottom: 40px;
+}
+.box h2 {
+    padding-top: 40px;
+    color: white;
+    font-weight: 250;
+}
+
+/* Forms */
+.box input[type = "text"], .box input[type = "password"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid var(--color-primary);
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+}
+.box input[type = "text"]:focus, .box input[type = "password"]:focus {
+    width: 280px;
+    border-color: var(--color-secondary);
+}
+
+/* Buttons */
+.box input[type = "submit"], .custom-btn {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid var(--color-secondary);
+    padding: 14px 10px;
+    margin-top: 30px;
+    width: 200px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+}
+.box input[type = "submit"]:hover, .custom-btn:hover {
+    background: var(--color-secondary);
+}
