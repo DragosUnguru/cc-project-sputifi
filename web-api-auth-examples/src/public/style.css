@@ -17,6 +17,13 @@ body {
 a {
     font-family: sans-serif;
     text-decoration: none;
+    color: white;
+    word-break: break-all;
+}
+
+/* Image displays */
+.media-object {
+    border-radius: 50%;
 }
 
 /* Boxed elements */
@@ -30,6 +37,32 @@ a {
     background: var(--color-bg-secondary);
     text-align: center;
     border-radius: 24px;
+    color: white;
+    word-break: break-all;
+}
+
+/* Description lists */
+dl {
+    width: 100%;
+    overflow: hidden;
+    background: var(--color-bg-secondary);
+    padding: 0;
+    margin: 0;
+    margin-top: 50px;
+}
+dt {
+    float: left;
+    width: 25%;
+    background: var(--color-bg-secondary);
+    padding: 0;
+    margin: 0px;
+}
+dd {
+    float: left;
+    width: 75%;
+    background: var(--color-bg-secondary);
+    padding: 0;
+    margin: 0
 }
 
 /* Boxed headings */
@@ -62,6 +95,19 @@ a {
 .box input[type = "text"]:focus, .box input[type = "password"]:focus {
     width: 280px;
     border-color: var(--color-secondary);
+}
+
+/* Username autofill background */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px var(--color-bg-secondary) inset !important;
+}
+
+/* Username autofill text */
+input:-webkit-autofill{
+    -webkit-text-fill-color: white !important;
 }
 
 /* Buttons */

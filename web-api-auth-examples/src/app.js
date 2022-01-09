@@ -12,6 +12,7 @@ var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+const { URLSearchParams } = require('url');
 
 var client_id = '414ec60c467540cc9e664c74eda894cd'; // OAuth2 client id
 var client_secret = '8307ec25b4a3426f97c16718a6927337'; // OAuth2 secret
@@ -38,7 +39,10 @@ var app = express();
 
 app.use(express.static(__dirname + '/public'))
    .use(cors())
-   .use(cookieParser());
+   .use(cookieParser())
+   .use(express.json())                        // to support JSON-encoded bodies
+   .use(express.urlencoded({extended: true})); // to support URL-encoded bodies
+
 
 app.get('/loginOAuth', function(req, res) {
 
@@ -57,8 +61,11 @@ app.get('/loginOAuth', function(req, res) {
     }));
 });
 
-app.get('/loginCredentials', function(req, res) {
+app.post('/loginCredentials', function(req, res) {
   // your application requests authorization
+  var client_id     = req.body.username,
+      client_secret = req.body.password;
+
   var authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     headers: {
@@ -84,6 +91,7 @@ app.get('/loginCredentials', function(req, res) {
       };
       request.get(options, function(error, response, body) {
         console.log(body);
+        res.redirect(redirect_uri);
       });
     }
   });
