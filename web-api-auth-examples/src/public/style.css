@@ -2,8 +2,8 @@
 :root {
     --color-bg-primary: #202020;
     --color-bg-secondary: #191919;
-    --color-primary: #2BDE6A;
-    --color-secondary: #B91D82;
+    --color-primary: #2bde6a;
+    --color-secondary: #b91d82;
 }
 
 body {
@@ -62,7 +62,7 @@ dd {
     width: 75%;
     background: var(--color-bg-secondary);
     padding: 0;
-    margin: 0
+    margin: 0;
 }
 
 /* Boxed headings */
@@ -78,7 +78,8 @@ dd {
 }
 
 /* Forms */
-.box input[type = "text"], .box input[type = "password"] {
+.box input[type="text"],
+.box input[type="password"] {
     border: 0;
     background: none;
     display: block;
@@ -92,26 +93,28 @@ dd {
     border-radius: 24px;
     transition: 0.25s;
 }
-.box input[type = "text"]:focus, .box input[type = "password"]:focus {
+.box input[type="text"]:focus,
+.box input[type="password"]:focus {
     width: 280px;
     border-color: var(--color-secondary);
 }
 
 /* Username autofill background */
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active{
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px var(--color-bg-secondary) inset !important;
 }
 
 /* Username autofill text */
-input:-webkit-autofill{
+input:-webkit-autofill {
     -webkit-text-fill-color: white !important;
 }
 
 /* Buttons */
-.box input[type = "submit"], .custom-btn {
+.box input[type="submit"],
+.custom-btn {
     border: 0;
     background: none;
     display: block;
@@ -127,6 +130,7 @@ input:-webkit-autofill{
     transition: 0.25s;
     cursor: pointer;
 }
-.box input[type = "submit"]:hover, .custom-btn:hover {
+.box input[type="submit"]:hover,
+.custom-btn:hover {
     background: var(--color-secondary);
 }
