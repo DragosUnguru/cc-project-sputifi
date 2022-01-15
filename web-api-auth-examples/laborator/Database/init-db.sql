@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS playlists (
     name varchar,
     userid varchar,
     link varchar,
-    info json
+    info varchar
 );

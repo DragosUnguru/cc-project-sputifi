@@ -1,9 +1,9 @@
 const express = require("express");
 
-const CreatePlaylistCommandHandler = require("../../Commands/Books/Handlers/CreatePlaylistCommandHandler.js");
+const CreatePlaylistCommandHandler = require("../../Commands/Playlists/Handlers/CreatePlaylistCommandHandler.js");
 const {
     CreatePlaylistCommand,
-} = require("../../Commands/Books/Models/CreatePlaylistCommand.js");
+} = require("../../Commands/Playlists/Models/CreatePlaylistCommand.js");
 
 const Router = express.Router();
 

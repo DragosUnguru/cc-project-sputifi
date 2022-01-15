@@ -4,7 +4,7 @@ metadata:
   name: procesator
 spec:
   containers:
-    - image: axonedge/lab-k8s-procesator
+    - image: tavipopescu/sputifi-procesator
       name: procesator
       envFrom:
         - secretRef:

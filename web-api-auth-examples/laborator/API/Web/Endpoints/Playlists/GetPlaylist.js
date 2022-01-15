@@ -6,7 +6,7 @@ const Router = express.Router();
 
 Router.get("/", async (req, res) => {
     try {
-        var playlist = await GetPlaylistQueryHandler.QueryAsync();
+        var playlist = await GetPlaylistQueryHandler.QueryAsync(req.body.name);
         res.json(playlist);
     } catch (err) {
         console.error(err);

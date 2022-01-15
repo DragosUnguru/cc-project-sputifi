@@ -6,7 +6,7 @@ metadata:
     tip: gigica
 spec:
   containers:
-    - image: axonedge/lab-k8s-database
+    - image: tavipopescu/sputifi-db
       name: db
       envFrom:
         - secretRef:

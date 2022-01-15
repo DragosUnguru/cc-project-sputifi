@@ -6,7 +6,7 @@ metadata:
     tip: georgik
 spec:
   containers:
-    - image: axonedge/lab-k8s-api
+    - image: tavipopescu/sputifi
       name: api
       envFrom:
         - secretRef:

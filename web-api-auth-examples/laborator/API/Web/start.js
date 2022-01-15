@@ -10,6 +10,8 @@ const endpoints = require("./Endpoints");
 
 const app = express();
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 app.use(helmet());
 app.use(
     morgan(
