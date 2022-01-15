@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db
+  labels:
+    tip: gigica
+spec:
+  containers:
+    - image: axonedge/lab-k8s-database
+      name: db
+      envFrom:
+        - secretRef:
+            name: db-secret
+      volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: db-pv
+
+  volumes:
+    - name: db-pv
+      persistentVolumeClaim:
+        claimName: db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-clusterip-service
+spec:
+  selector:
+    tip: gigica
+  ports:
+    - port: 5432
+      targetPort: 5432
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: db-pv
+spec:
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 500Mi
+  hostPath:
+    path: /tmp/data

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-clusterip-service
+spec:
+  selector:
+    tip: florica
+  ports:
+    - port: 5672
+      targetPort: 5672
+  type: ClusterIP

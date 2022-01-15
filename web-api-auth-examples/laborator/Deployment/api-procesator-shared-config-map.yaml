@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  AMQPURL: amqp://rabbitmq-clusterip-service
+  PGPORT: "5432"
+  PGHOST: db-clusterip-service
+kind: ConfigMap
+metadata:
+  name: shared-cmap
