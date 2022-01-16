@@ -67,7 +67,7 @@
                 </div>
 
                 <div class="discover-playlist-info">
-                    <input type="text" placeholder="Playlist Name" />
+                    <input type="text" id="get-playlist-name" placeholder="Playlist Name" />
                     <button class="custom-btn" id="get-playlist">
                         Discover Playlist
                     </button>
@@ -121,9 +121,39 @@
                     return hashParams;
                 }
 
-                function append_json(json) {
+                function append_existing(data) {
                     var table = document.getElementById("playlist-table");
-                    json.items.forEach(function (track) {
+                    $("#playlist-table tr").remove();
+                    data.items.forEach(function (item) {
+                        var tr = document.createElement("tr");
+                        var track = item.track;
+                        tr.innerHTML =
+                            "<td>" +
+                            track.name +
+                            "</td>" +
+                            "<td>" +
+                            track.artists[0].name +
+                            "</td>" +
+                            "<td>" +
+                            track.album.name +
+                            "</td>" +
+                            "<td>" +
+                            track.album.release_date +
+                            "</td>" +
+                            "<td>" +
+                            '<a href="' +
+                            track.external_urls.spotify +
+                            '">' +
+                            "Link" +
+                            "</td>";
+                        table.appendChild(tr);
+                    });
+                }
+
+                function append_non_existing(data) {
+                    var table = document.getElementById("playlist-table");
+                    $("#playlist-table tr").remove();
+                    data.items.forEach(function (track) {
                         var tr = document.createElement("tr");
                         tr.innerHTML =
                             "<td>" +
@@ -198,7 +228,7 @@
                                 "create-playlist-name"
                             ).value;
 
-                            var playlist_id;
+                            var playlist_id, playlist_link;
                             alert(playlist_name);
                             $.ajax({
                                 url:
@@ -222,10 +252,10 @@
                                     );
                                 },
                                 success: function (json) {
-                                    alert("Playlist added");
+                                    // alert("Playlist added");
                                 },
                                 error: function (data) {
-                                    alert("Playlist Failed");
+                                    // alert("Playlist Failed");
                                 },
                             }).done(function (json) {
                                 document.getElementById(
@@ -233,9 +263,10 @@
                                 ).value = "";
 
                                 playlist_id = json.id;
+                                playlist_link = json.external_urls.spotify;
                             });
-                            alert("abcd");
                             var no_songs = document.getElementById("number-of-songs").value;
+                            document.getElementById("number-of-songs").value = "";
                             alert(no_songs);
                             $.ajax({
                                 url: "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=" + no_songs,
@@ -251,10 +282,10 @@
                                     );
                                 },
                                 success: function (json) {
-                                    alert("Received top songs");
+                                    // alert("Received top songs");
                                 },
                                 error: function (data) {
-                                    alert("Failed top songs");
+                                    // alert("Failed top songs");
                                 },
                             }).done(function (json) {
                                 $.ajax({
@@ -273,15 +304,33 @@
                                         "Authorization",
                                         "Bearer " + access_token
                                     );
-                                },
-                                success: function (json) {
-                                    alert("Playlist added");
-                                },
-                                error: function (data) {
-                                    alert("Playlist Failed");
-                                },
+                                }
+                                }).done(function (json) {
+                                    $.ajax({
+                                        url: "http://localhost:8000/api/v1/playlists",
+                                        type: "POST",
+                                        data: JSON.stringify({
+                                            id: playlist_id,
+                                            name: playlist_name,
+                                            userid: user_id,
+                                            link: playlist_link,
+                                            info: "Smecherie"
+                                        }),
+                                        beforeSend: function (xhr) {
+                                            xhr.setRequestHeader(
+                                                "Content-Type",
+                                                "application/json"
+                                            );
+                                        },
+                                        success: function (json) {
+                                            alert("Playlist added");
+                                        },
+                                        error: function (data) {
+                                            alert("Playlist Failed");
+                                        },
+                                        })
+                                    });
                                 });
-                            });
 
                             
                         },
@@ -290,33 +339,80 @@
                     document.getElementById("get-playlist").addEventListener(
                         "click",
                         function () {
+                            var playlist_to_get = document.getElementById("get-playlist-name").value;
+                            // alert(process.env.API_HOST);
                             $.ajax({
-                                url: "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=10",
+                                url: "http://localhost:8000/api/v1/playlists/" + playlist_to_get,
                                 type: "GET",
-                                beforeSend: function (xhr) {
-                                    xhr.setRequestHeader(
-                                        "Content-Type",
-                                        "application/json"
-                                    );
-                                    xhr.setRequestHeader(
-                                        "Authorization",
-                                        "Bearer " + access_token
-                                    );
-                                },
                                 success: function (json) {
-                                    alert("Here");
+                                    alert("Get playlist success");
                                 },
                                 error: function (data) {
-                                    alert("Failed");
+                                    alert("Get playlist failed");
                                 },
-                            }).done(function (json) {
-                                append_json(json);
-                                document.getElementById(
-                                    "playlist-table"
-                                ).style.display = "inline-block";
-                                document.getElementById(
-                                    "open-in-spotify"
-                                ).style.display = "block";
+                            }).done(function (data) {                     
+                                if (data.length > 0 && Object.keys(data[0]).length > 0) {
+                                    var json = data[0];
+                                    $.ajax({
+                                        url: "https://api.spotify.com/v1/playlists/" + json.id,
+                                        type: "GET",
+                                        beforeSend: function (xhr) {
+                                            xhr.setRequestHeader(
+                                                "Content-Type",
+                                                "application/json"
+                                            );
+                                            xhr.setRequestHeader(
+                                                "Authorization",
+                                                "Bearer " + access_token
+                                            );
+                                        },
+                                        success: function (json) {
+                                            alert("Here");
+                                        },
+                                        error: function (data) {
+                                            alert("Failed");
+                                        },
+                                    }).done(function (json) {
+                                        append_existing(json.tracks);
+                                        document.getElementById(
+                                            "playlist-table"
+                                        ).style.display = "inline-block";
+                                        document.getElementById(
+                                            "open-in-spotify"
+                                        ).style.display = "block";
+                                        document.getElementById("get-playlist-name").value = "";
+                                        document.getElementById("open-in-spotify").onclick = function () {
+                                            location.href = json.external_urls.spotify;
+                                        };
+                                    });
+                                } else {
+                                    $.ajax({
+                                        url: "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=10",
+                                        type: "GET",
+                                        beforeSend: function (xhr) {
+                                            xhr.setRequestHeader(
+                                                "Content-Type",
+                                                "application/json"
+                                            );
+                                            xhr.setRequestHeader(
+                                                "Authorization",
+                                                "Bearer " + access_token
+                                            );
+                                        },
+                                        success: function (json) {
+                                            alert("Here");
+                                        },
+                                        error: function (data) {
+                                            alert("Failed");
+                                        },
+                                    }).done(function (json) {
+                                        append_non_existing(json);
+                                        document.getElementById(
+                                            "playlist-table"
+                                        ).style.display = "inline-block";
+                                        document.getElementById("get-playlist-name").value = "";
+                                    });
+                                    }
                             });
                         },
                         false

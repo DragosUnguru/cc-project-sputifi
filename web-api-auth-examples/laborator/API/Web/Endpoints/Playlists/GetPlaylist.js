@@ -4,9 +4,15 @@ const GetPlaylistQueryHandler = require("../../Queries/Playlists/Handlers/GetPla
 
 const Router = express.Router();
 
-Router.get("/", async (req, res) => {
+Router.get("/:playlist_id", async (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Methods");
+
     try {
-        var playlist = await GetPlaylistQueryHandler.QueryAsync(req.body.name);
+        console.log(req.params);
+        console.log(req.params.playlist_id);
+        var playlist = await GetPlaylistQueryHandler.QueryAsync(req.params.playlist_id);
         res.json(playlist);
     } catch (err) {
         console.error(err);
