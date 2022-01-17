@@ -252,10 +252,10 @@
                                     );
                                 },
                                 success: function (json) {
-                                    // alert("Playlist added");
+                                    alert("Playlist added");
                                 },
                                 error: function (data) {
-                                    // alert("Playlist Failed");
+                                    alert("Playlist Add Failed");
                                 },
                             }).done(function (json) {
                                 document.getElementById(
@@ -282,10 +282,10 @@
                                     );
                                 },
                                 success: function (json) {
-                                    // alert("Received top songs");
+                                    alert("Received data from Spotify");
                                 },
                                 error: function (data) {
-                                    // alert("Failed top songs");
+                                    alert("Failed data from Spotify");
                                 },
                             }).done(function (json) {
                                 $.ajax({
@@ -323,10 +323,10 @@
                                             );
                                         },
                                         success: function (json) {
-                                            alert("Playlist added");
+                                            alert("Playlist added to DB");
                                         },
                                         error: function (data) {
-                                            alert("Playlist Failed");
+                                            alert("Playlist Add to DB Failed");
                                         },
                                         })
                                     });
@@ -340,7 +340,6 @@
                         "click",
                         function () {
                             var playlist_to_get = document.getElementById("get-playlist-name").value;
-                            // alert(process.env.API_HOST);
                             $.ajax({
                                 url: "http://localhost:8000/api/v1/playlists/" + playlist_to_get,
                                 type: "GET",
@@ -367,10 +366,10 @@
                                             );
                                         },
                                         success: function (json) {
-                                            alert("Here");
+                                            alert("Playlist is on Spotify");
                                         },
                                         error: function (data) {
-                                            alert("Failed");
+                                            alert("Playlist is not on Spotify");
                                         },
                                     }).done(function (json) {
                                         append_existing(json.tracks);
@@ -400,10 +399,10 @@
                                             );
                                         },
                                         success: function (json) {
-                                            alert("Here");
+                                            alert("Top 10 songs received");
                                         },
                                         error: function (data) {
-                                            alert("Failed");
+                                            alert("Top 10 songs receive failed");
                                         },
                                     }).done(function (json) {
                                         append_non_existing(json);

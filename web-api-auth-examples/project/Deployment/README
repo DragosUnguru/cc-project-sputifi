@@ -1,0 +1,26 @@
+==== Spotify Paylist Generator ==
+======== Cloud Computing ========
+
+Studenti:
+Popescu Daniel Octavian
+Serban Petre Bogdan
+Unguru Dragos Gabriel
+
+Proiectul presupune implementarea unui API propriu bazat pe cereri GET/POST ce
+serveste rolul de generator de playlist-uri in aplicatia Spotify. Playlistul 
+este realizat automat pe baza top N melodii preferate ale unui user. Pentru 
+testarea si expunerea functionalitatii API-ului s-a realizat un frontend 
+specific.
+
+Implementare:
+Proiectul consta intr-un deployment Kubernetes in care sunt integrate 
+componentele descrise in structura, utilizandu-se secrete pentru
+datele sensibile. Pentru interactiunea cu Spotify, se utilizeaza de API-ul 
+pus la dispozitie de acestia. 
+
+Structura proiectului:
+- API propriu - Node.js
+- DB - PostgressSQL
+- Broker - RabbitMQ
+- Procesator - Node.js
+- Frontend - Node.js
